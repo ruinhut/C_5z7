@@ -500,6 +500,9 @@ int double4(int player, int x , int y , int board[SIZE][SIZE]){
                         ;
                     }
                 }
+
+                break;
+                //不再继续执行
             }else if(board[i][j] == 3-player){
                 break;
                 //遇到对方的棋子就跳出
@@ -531,6 +534,9 @@ int double4(int player, int x , int y , int board[SIZE][SIZE]){
                         ;
                     }
                 }
+
+                break;
+                //不再继续执行
             }else if(board[i][j] == 3-player){
                 break;
                 //遇到对方的棋子就跳出
@@ -572,6 +578,9 @@ int double4(int player, int x , int y , int board[SIZE][SIZE]){
                         ;
                     }
                 }
+
+                break;
+                //不再继续执行
             }else if(board[i][j] == 3-player){
                 break;
                 //遇到对方的棋子就跳出
@@ -603,6 +612,9 @@ int double4(int player, int x , int y , int board[SIZE][SIZE]){
                         ;
                     }
                 }
+
+                break;
+                //不再继续执行
             }else if(board[i][j] == 3-player){
                 break;
                 //遇到对方的棋子就跳出
@@ -650,7 +662,7 @@ int double3(int player, int x , int y , int board[SIZE][SIZE]){
 
     //首先是左右方向：
     connectNumber = rawNumber(player, x , y , board);
-    if(connectNumber == 3){
+    if(connectNumber == 3 && connectNumber < 4){
         if(rawBlock(player, x , y , board) == 0){
             numof3++;
         }else{
@@ -689,7 +701,299 @@ int double3(int player, int x , int y , int board[SIZE][SIZE]){
                 ;
                 //遇到自己的棋子就继续
             }
+        }
 
+        tempX = 0;
+        tempY = 0;
+        //重新置零
+
+        //再向左判断是不是活三了
+        for(i = y - 1 ; i > -1 ; i--){
+            if(board[x][i] == 0){
+                if(i == 0 || board[x][i-1] == 0){
+                    break;
+                    //如果遇到两个0绝对不行
+                }
+                tempX = x;
+                tempY = i;
+                //如果遇到空格，记录位置
+
+                if(forbidden(player, tempX , tempY , board) == 0){
+                    //如果这点能落子
+                    if(rawNumber(player, tempX , tempY , board) == 4 
+                    && rawBlock(player, tempX , tempY , board) == 0){
+                        //该点能成活4，则算一个
+                        numof3++;
+                    }else{
+                        ;
+                    }
+                }
+
+                break;
+                //不再继续执行
+
+            }else if(board[x][i] == 3-player){
+                break;
+                //遇到对方的棋子就跳出
+            }else{
+                ;
+                //遇到自己的棋子就继续
+            }
+        }
+
+        tempX = 0;
+        tempY = 0;
+        //重新置零
+    }
+
+    //再是上下方向
+    connectNumber = colNumber(player, x , y , board);
+    if(connectNumber == 3 && connectNumber < 4){
+        if(colBlock(player, x , y , board) == 0){
+            numof3++;
+        }else{
+            ;
+        }
+    }else if(connectNumber > 0 && connectNumber < 3){
+
+        //先向上判断是不是活三了
+        for(i = x - 1 ; i > -1 ; i--){
+            if(board[i][y] == 0){
+                if(i == 0 || board[i-1][y] == 0){
+                    break;
+                    //脱出
+                }
+                tempX = i;
+                tempY = y;
+                //如果遇到空格，记录位置
+
+                if(forbidden(player, tempX , tempY , board) == 0){
+                    //如果这点能落子
+                    if(colNumber(player, tempX , tempY , board) == 4 
+                    && colBlock(player, tempX , tempY , board) == 0){
+                        numof3++;
+                    }else{
+                        ;
+                    }
+                }
+
+                break;
+                //不再继续执行
+            }else if(board[i][y] == 3-player){
+                break;
+                //遇到对方的棋子就跳出
+            }else{
+                ;
+                //遇到自己的棋子就继续
+            }
+        }
+
+        tempX = 0;
+        tempY = 0;
+        //重新置零
+
+        //再向下判断是不是活三了
+        for(i = x + 1 ; i < SIZE ; i++){
+            if(board[i][y] == 0){
+                if(i == SIZE - 1 || board[i+1][y] == 0){
+                    break;
+                }
+                tempX = i;
+                tempY = y;
+                //如果遇到空格，记录位置
+
+                if(forbidden(player, tempX , tempY , board) == 0){
+                    //如果这点能落子
+                    if(colNumber(player, tempX , tempY , board) == 4 
+                    && colBlock(player, tempX , tempY , board) == 0){
+                        numof3++;
+                    }else{
+                        ;
+                    }
+                }
+
+                break;
+                //不再继续执行
+            }else if(board[i][y] == 3-player){
+                break;
+                //遇到对方的棋子就跳出
+            }else{
+                ;
+                //遇到自己的就继续
+            }
+        }
+
+        tempX = 0;
+        tempY = 0;
+        //重新置零
+    }
+
+    //再是左上右下方向
+    connectNumber = luNumber(player, x , y , board);
+    if(connectNumber == 3 && connectNumber < 4){
+        if(luBlock(player, x , y , board) == 0){
+            numof3++;
+        }else{
+            ;
+        }
+    }else if(connectNumber > 0 && connectNumber < 3){
+        //先向左上判断是不是活三了
+        for(i = x - 1 , j = y - 1 ; i > -1 && j > -1 ; i--, j--){
+            if(board[i][j] == 0){
+                if(i == 0 || j == 0 || board[i-1][j-1] == 0){
+                    break;
+                }
+                tempX = i;
+                tempY = j;
+                //如果遇到空格，记录位置
+
+                if(forbidden(player, tempX , tempY , board) == 0){
+                    //如果这点能落子
+                    if(luNumber(player, tempX , tempY , board) == 4 
+                    && luBlock(player, tempX , tempY , board) == 0){
+                        numof3++;
+                    }else{
+                        ;
+                    }
+                }
+
+                break;
+                //不再继续执行
+            }else if(board[i][j] == 3-player){
+                break;
+                //遇到对方的棋子就跳出
+            }else{
+                ;
+                //遇到自己的棋子就继续
+            }
+        }
+
+        tempX = 0;
+        tempY = 0;
+        //重新置零
+
+        //再向右下判断是不是活三了
+        for(i = x + 1 , j = y + 1 ; i < SIZE && j < SIZE ; i++, j++){
+            if(board[i][j] == 0){
+                if(i == SIZE -1 || j == SIZE -1 || board[i+1][j+1] == 0){
+                    break;
+                }
+                tempX = i;
+                tempY = j;
+                //如果遇到空格，记录位置
+
+                if(forbidden(player, tempX , tempY , board) == 0){
+                    //如果这点能落子
+                    if(luNumber(player, tempX , tempY , board) == 4 
+                    && luBlock(player, tempX , tempY , board) == 0){
+                        numof3++;
+                    }else{
+                        ;
+                    }
+                }
+
+                break;
+                //不再继续执行
+            }else if(board[i][j] == 3-player){
+                break;
+                //遇到对方的棋子就跳出
+            }else{
+                ;
+                //遇到自己的棋子就继续
+            }
+        }
+
+        tempX = 0;
+        tempY = 0;
+        //重新置零
+
+    }
+
+    //最后是右上左下方向
+    connectNumber = ruNumber(player, x , y , board);
+    if(connectNumber == 3 && connectNumber < 4){
+        if(ruBlock(player, x , y , board) == 0){
+            numof3++;
+        }else{
+            ;
+        }
+    }else if(connectNumber > 0 && connectNumber < 3){
+        //先向右上判断是不是活三了
+        for(i = x - 1 , j = y + 1 ; i > -1 && j < SIZE ; i--, j++){
+            if(board[i][j] == 0){
+                if(i == 0 || j == SIZE - 1 || board[i-1][j+1] == 0){
+                    break;
+                }
+                tempX = i;
+                tempY = j;
+                //如果遇到空格，记录位置
+
+                if(forbidden(player, tempX , tempY , board) == 0){
+                    //如果这点能落子
+                    if(ruNumber(player, tempX , tempY , board) == 4 
+                    && ruBlock(player, tempX , tempY , board) == 0){
+                        numof3++;
+                    }else{
+                        ;
+                    }
+                }
+
+                break;
+                //不再继续执行
+            }else if(board[i][j] == 3-player){
+                break;
+                //遇到对方的棋子就跳出
+            }else{
+                ;
+                //遇到自己的棋子就继续
+            }
+        }
+
+        tempX = 0;
+        tempY = 0;
+        //重新置零
+
+        //再向左下判断是不是活三了
+        for(i = x + 1 , j = y - 1 ; i < SIZE && j > -1 ; i++, j--){
+            if(board[i][j] == 0){
+                if(i == SIZE - 1 || j == 0 || board[i+1][j-1] == 0){
+                    break;
+                }
+                tempX = i;
+                tempY = j;
+                //如果遇到空格，记录位置
+
+                if(forbidden(player, tempX , tempY , board) == 0){
+                    //如果这点能落子
+                    if(ruNumber(player, tempX , tempY , board) == 4 
+                    && ruBlock(player, tempX , tempY , board) == 0){
+                        numof3++;
+                    }else{
+                        ;
+                    }
+                }
+
+                break;
+                //不再继续执行
+            }else if(board[i][j] == 3-player){
+                break;
+                //遇到对方的棋子就跳出
+            }else{
+                ;
+                //遇到自己的棋子就继续
+            }
+        }
+
+        tempX = 0;
+        tempY = 0;
+        //重新置零
+    }
+
+    if(numof3 >= 2){
+        return -1;
+    }
+
+    return 0;
 }
 
 //4 综合禁手
@@ -723,22 +1027,19 @@ int main(){
     int arrayForInnerBoardLayout[SIZE][SIZE];
     int num = 0;
     int i, j;
-    for(j = 3 ; j < 10 ; j++){
-        if(j == 4 || j == 8 ){
-            arrayForInnerBoardLayout[4][j] = 0;
+    for(j = 3 ; j < 9 ; j++){
+        if(j == 4 || j == 7 ){
+            arrayForInnerBoardLayout[j][j] = 0;
         }
         else{
-            arrayForInnerBoardLayout[4][j] = 1;
+            arrayForInnerBoardLayout[j][j] = 1;
         }
     }
-    for(i = 1 ; i < 8 ; i++){
-        if(i == 2 || i == 6 ){
-            arrayForInnerBoardLayout[i][6] = 0;
-        }
-        else{
-            arrayForInnerBoardLayout[i][6] = 1;
-        }
-    }
+    // for(i = 4 ; i < 10 ; i++){
+    //     arrayForInnerBoardLayout[8][i] = 1;
+
+    // }
+    // arrayForInnerBoardLayout[8][8] = 0;
 
     // if(longConection(1,5,5,arrayForInnerBoardLayout)){
     //     printf("fuck error\n");
@@ -753,7 +1054,7 @@ int main(){
         }
         printf("\n");
     }
-    printf("禁收吗：%d\n",forbidden(1,4,6,arrayForInnerBoardLayout));
+    printf("禁收吗：%d\n",forbidden(1,5,5,arrayForInnerBoardLayout));
     // printf("%d\n",colBlock(1,5,5,arrayForInnerBoardLayout));
     // printf("%d\n",luBlock(1,5,5,arrayForInnerBoardLayout));
     // printf("%d\n",ruBlock(1,5,5,arrayForInnerBoardLayout));
