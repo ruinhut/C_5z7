@@ -1156,12 +1156,12 @@ void score(int player , int board[SIZE][SIZE], struct singleScore scoreBoard[SIZ
 
                     for(k = 0 ; k < 4 ; k++){
                         if(scoreBoard[i][j].info[k].linkNum == 5){
-                            scoreBoard[i][j].score += 10000;
-                            //如果有一�?5连，则分�?+10000
+                            scoreBoard[i][j].score += 30000;
+                            //如果有一�?5连，则分�?+30000
                         }else if(scoreBoard[i][j].info[k].linkNum == 4){
                             if(scoreBoard[i][j].info[k].blockNum == 0){
-                                scoreBoard[i][j].score += 8000;
-                                //如果有一个活四，则分�?+650
+                                scoreBoard[i][j].score += 10000;
+                                //如果有一个活四，则分�?+10000
                             }else if(scoreBoard[i][j].info[k].blockNum == 1){
                                 scoreBoard[i][j].score += 1500;
                                 //如果有一个半活四，则分数+400
