@@ -1163,7 +1163,7 @@ void score(int player , int board[SIZE][SIZE], struct singleScore scoreBoard[SIZ
                                 scoreBoard[i][j].score += 10000;
                                 //如果有一个活四，则分�?+10000
                             }else if(scoreBoard[i][j].info[k].blockNum == 1){
-                                scoreBoard[i][j].score += 1500;
+                                scoreBoard[i][j].score += 3000;
                                 //如果有一个半活四，则分数+400
                             }else{
                                 ;
@@ -1171,10 +1171,10 @@ void score(int player , int board[SIZE][SIZE], struct singleScore scoreBoard[SIZ
                             }
                         }else if(scoreBoard[i][j].info[k].linkNum == 3){
                             if(scoreBoard[i][j].info[k].blockNum == 0){
-                                scoreBoard[i][j].score += 2000;
+                                scoreBoard[i][j].score += 1000;
                                 //如果有一个活三，则分�?+400
                             }else if(scoreBoard[i][j].info[k].blockNum == 1){
-                                scoreBoard[i][j].score += 1000;
+                                scoreBoard[i][j].score += 500;
                                 //如果有一个半活三，则分数+200
                             }else{
                                 ;
@@ -1193,7 +1193,7 @@ void score(int player , int board[SIZE][SIZE], struct singleScore scoreBoard[SIZ
                             }
                         }else if(scoreBoard[i][j].info[k].linkNum == 1){
                             if(scoreBoard[i][j].info[k].blockNum == 0){
-                                scoreBoard[i][j].score += 25;
+                                scoreBoard[i][j].score += 125;
                                 //如果有一个活�?，则分数+25
                             }else if(scoreBoard[i][j].info[k].blockNum == 1){
                                 scoreBoard[i][j].score += 15;
